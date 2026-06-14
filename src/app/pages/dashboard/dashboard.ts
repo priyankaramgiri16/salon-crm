@@ -14,10 +14,10 @@
     userName = '';
     showProfileMenu = false;
 
-    customerCount = 0;
-    appointmentCount = 0;
-    serviceCount = 0;
-    revenue = 0;
+    customerCount = 124;
+    appointmentCount = 38;
+    serviceCount = 12;
+    revenue = 45750;
 
     constructor(private router: Router) {}
 
