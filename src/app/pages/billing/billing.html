@@ -1,0 +1,48 @@
+<div class="billing-container">
+
+  <h2>Generate Bill</h2>
+
+  <div *ngIf="!appointment">
+
+    <h3>No Completed Appointment Found</h3>
+
+    <p>
+      Mark an appointment as Completed
+      from Appointment page first.
+    </p>
+
+  </div>
+
+  <div class="bill-card" *ngIf="appointment">
+
+    <p><strong>Client:</strong> {{appointment.customer}}</p>
+
+    <p><strong>Service:</strong> {{appointment.service}}</p>
+
+    <p><strong>Staff:</strong> {{appointment.staff}}</p>
+
+    <p><strong>Date:</strong> {{appointment.date}}</p>
+
+    <p><strong>Time:</strong> {{appointment.time}}</p>
+
+    <hr>
+
+    <p>Amount : ₹{{amount}}</p>
+
+    <p>Tax : ₹{{tax}}</p>
+
+    <p>Discount : ₹{{discount}}</p>
+
+    <h3>Total : ₹{{total}}</h3>
+
+    <button (click)="printBill()">
+      Print Bill
+    </button>
+
+    <button (click)="shareBill()">
+      Share Bill
+    </button>
+
+  </div>
+
+</div>

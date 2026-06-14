@@ -1,0 +1,27 @@
+<div class="settings-container">
+
+  <h2>Settings</h2>
+
+  <div class="form">
+
+    <label>Salon Name</label>
+
+    <input
+      type="text"
+      [(ngModel)]="salonName"
+    >
+
+    <label>Contact Number</label>
+
+    <input
+      type="text"
+      [(ngModel)]="phone"
+    >
+
+    <button (click)="saveSettings()">
+      Save Settings
+    </button>
+
+  </div>
+
+</div>

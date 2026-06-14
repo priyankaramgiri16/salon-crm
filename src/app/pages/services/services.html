@@ -1,0 +1,70 @@
+<div class="services-container">
+
+  <div class="header">
+
+    <h2>Services Management</h2>
+
+    <button
+      class="add-btn"
+      (click)="addService()">
+
+      + Add Service
+
+    </button>
+
+  </div>
+
+  <table>
+
+    <thead>
+
+      <tr>
+        <th>ID</th>
+        <th>Service Name</th>
+        <th>Price</th>
+        <th>Duration</th>
+        <th>Action</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr
+        *ngFor="let service of services; let i = index">
+
+        <td>{{ i + 1 }}</td>
+
+        <td>{{ service.name }}</td>
+
+        <td>₹{{ service.price }}</td>
+
+        <td>{{ service.duration }}</td>
+
+        <td>
+
+          <button
+            class="edit-btn"
+            (click)="editService(i)">
+
+            Edit
+
+          </button>
+
+          <button
+            class="delete-btn"
+            (click)="deleteService(i)">
+
+            Delete
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

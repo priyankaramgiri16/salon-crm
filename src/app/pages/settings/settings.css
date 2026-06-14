@@ -1,0 +1,24 @@
+.settings-container{
+  padding:30px;
+}
+
+.form{
+  width:400px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+input{
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+
+button{
+  background:#4f46e5;
+  color:white;
+  border:none;
+  padding:12px;
+  border-radius:8px;
+}

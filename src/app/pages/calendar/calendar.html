@@ -1,0 +1,46 @@
+<div class="calendar-container">
+
+  <h2>Calendar Booking</h2>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Staff</th>
+        <th>Time Slot</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let slot of slots">
+
+        <td>{{ slot.date }}</td>
+        <td>{{ slot.staff }}</td>
+        <td>{{ slot.time }}</td>
+
+        <td>
+          <span
+            [style.color]="slot.status === 'Booked' ? 'red' : 'green'">
+            {{ slot.status }}
+          </span>
+        </td>
+
+        <td>
+          <button
+            (click)="selectSlot(slot)"
+            [disabled]="slot.status === 'Booked'">
+            Select Slot
+          </button>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

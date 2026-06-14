@@ -1,0 +1,199 @@
+<div class="appointments-container">
+
+  <h2>Appointment Booking</h2>
+
+  <div class="form-section">
+
+    <input
+      type="text"
+      placeholder="Client Name"
+      [(ngModel)]="newAppointment.customer"
+    />
+
+    <input
+      type="text"
+      placeholder="Phone Number"
+      maxlength="10"
+      [(ngModel)]="newAppointment.phone"
+    />
+
+    <input
+      type="text"
+      placeholder="Staff Name"
+      [(ngModel)]="newAppointment.staff"
+      readonly
+    />
+
+    <!-- Dynamic Service Dropdown -->
+
+    <select [(ngModel)]="newAppointment.service">
+
+      <option value="">
+        Select Service
+      </option>
+
+      <option
+        *ngFor="let service of availableServices"
+        [value]="service">
+
+        {{ service }}
+
+      </option>
+
+    </select>
+
+    <input
+      type="date"
+      [(ngModel)]="newAppointment.date"
+      readonly
+    />
+
+    <input
+      type="text"
+      [(ngModel)]="newAppointment.time"
+      readonly
+    />
+
+    <textarea
+      placeholder="Special Instructions / Notes"
+      [(ngModel)]="newAppointment.notes">
+    </textarea>
+
+    <button (click)="bookAppointment()">
+      Book Appointment
+    </button>
+
+  </div>
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Phone</th>
+          <th>Staff</th>
+          <th>Service</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let appointment of appointments">
+
+          <td>{{ appointment.id }}</td>
+
+          <td>{{ appointment.customer }}</td>
+
+          <td>{{ appointment.phone }}</td>
+
+          <td>{{ appointment.staff }}</td>
+
+          <td>{{ appointment.service }}</td>
+
+          <td>{{ appointment.date }}</td>
+
+          <td>{{ appointment.time }}</td>
+
+          <td>
+
+            <select
+              class="status-dropdown"
+              [ngClass]="{
+                'status-pending': appointment.status === 'Pending',
+                'status-confirmed': appointment.status === 'Confirmed',
+                'status-completed': appointment.status === 'Completed',
+                'status-cancelled': appointment.status === 'Cancelled'
+              }"
+              [(ngModel)]="appointment.status"
+              (change)="saveAppointments()">
+
+              <option value="Pending">
+                Pending
+              </option>
+
+              <option value="Confirmed">
+                Confirmed
+              </option>
+
+              <option value="Completed">
+                Completed
+              </option>
+
+              <option value="Cancelled">
+                Cancelled
+              </option>
+
+            </select>
+
+          </td>
+
+          <td>
+
+            <div class="action-buttons">
+
+              <button
+                class="edit-btn"
+                (click)="editAppointment(appointment)">
+                Edit
+              </button>
+
+              <button
+                class="view-btn"
+                (click)="viewAppointment(appointment)">
+                View
+              </button>
+
+              <button
+                class="reschedule-btn"
+                (click)="rescheduleAppointment(appointment)">
+                Reschedule
+              </button>
+
+              <button
+                class="share-btn"
+                (click)="shareAppointment(appointment)">
+                Share
+              </button>
+
+              <button
+                class="delete-btn"
+                (click)="deleteAppointment(appointment.id)">
+                Delete
+              </button>
+
+              <button
+              class="bill-btn"
+              (click)="generateBill(appointment)">
+              Bill
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+        <tr *ngIf="appointments.length === 0">
+
+          <td colspan="9" style="text-align:center;padding:20px;">
+            No Appointments Found
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
