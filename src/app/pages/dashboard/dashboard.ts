@@ -1,124 +1,149 @@
-  import { Component, OnInit } from '@angular/core';
-  import { CommonModule } from '@angular/common';
-  import { RouterModule, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 
-  @Component({
-    selector: 'app-dashboard',
-    standalone: true,
-    imports: [CommonModule, RouterModule],
-    templateUrl: './dashboard.html',
-    styleUrls: ['./dashboard.css']
-  })
-  export class Dashboard implements OnInit {
+@Component({
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './dashboard.html',
+  styleUrls: ['./dashboard.css']
+})
+export class Dashboard implements OnInit {
 
-    userName = '';
-    showProfileMenu = false;
+  userName = '';
+  showProfileMenu = false;
 
-    customerCount = 124;
-    appointmentCount = 38;
-    serviceCount = 12;
-    revenue = 45750;
+  customerCount = 0;
+  appointmentCount = 0;
+  serviceCount = 0;
+  revenue = 0;
 
-    constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-      const loggedIn =
-        localStorage.getItem('loggedIn');
+    const loggedIn = localStorage.getItem('loggedIn');
 
-      if (loggedIn !== 'true') {
-
-        this.router.navigate(['/']);
-        return;
-
-      }
-
-      this.userName =
-        localStorage.getItem('userName') || 'Admin';
-
-      this.loadDashboardStats();
+    if (loggedIn !== 'true') {
+      this.router.navigate(['/']);
+      return;
     }
 
-    loadDashboardStats() {
+    this.userName =
+      localStorage.getItem('userName') || 'Admin';
 
-      const customers =
-        JSON.parse(localStorage.getItem('customers') || '[]');
-
-      const appointments =
-        JSON.parse(localStorage.getItem('appointments') || '[]');
-
-      const services =
-        JSON.parse(localStorage.getItem('services') || '[]');
-
-      const bills =
-        JSON.parse(localStorage.getItem('bills') || '[]');
-
-      this.customerCount = customers.length;
-
-      this.appointmentCount = appointments.length;
-
-      this.serviceCount = services.length;
-
-      this.revenue = bills.reduce(
-        (total: number, bill: any) =>
-          total + (bill.total || 0),
-        0
-      );
-    }
-
-    toggleProfile() {
-
-      this.showProfileMenu =
-        !this.showProfileMenu;
-    }
-
-    changePassword() {
-
-      const currentPassword = prompt(
-        'Enter Current Password'
-      );
-
-      const savedPassword =
-        localStorage.getItem('adminPassword') || 'admin@16';
-
-      if (currentPassword !== savedPassword) {
-
-        alert('Current Password Incorrect');
-        return;
-      }
-
-      const newPassword = prompt(
-        'Enter New Password'
-      );
-
-      if (!newPassword) {
-        return;
-      }
-
+    // Demo data for assessment project
+    if (!localStorage.getItem('customers')) {
       localStorage.setItem(
-        'adminPassword',
-        newPassword
+        'customers',
+        JSON.stringify(new Array(124).fill({}))
       );
-
-      alert('Password Changed Successfully');
     }
 
-    logout() {
+    if (!localStorage.getItem('appointments')) {
+      localStorage.setItem(
+        'appointments',
+        JSON.stringify(new Array(38).fill({}))
+      );
+    }
+
+    if (!localStorage.getItem('services')) {
+      localStorage.setItem(
+        'services',
+        JSON.stringify(new Array(12).fill({}))
+      );
+    }
+
+    if (!localStorage.getItem('bills')) {
+      localStorage.setItem(
+        'bills',
+        JSON.stringify([
+          { total: 15000 },
+          { total: 12000 },
+          { total: 18750 }
+        ])
+      );
+    }
+
+    this.loadDashboardStats();
+  }
+
+  loadDashboardStats(): void {
+
+    const customers =
+      JSON.parse(localStorage.getItem('customers') || '[]');
+
+    const appointments =
+      JSON.parse(localStorage.getItem('appointments') || '[]');
+
+    const services =
+      JSON.parse(localStorage.getItem('services') || '[]');
+
+    const bills =
+      JSON.parse(localStorage.getItem('bills') || '[]');
+
+    this.customerCount = customers.length;
+    this.appointmentCount = appointments.length;
+    this.serviceCount = services.length;
+
+    this.revenue = bills.reduce(
+      (total: number, bill: any) =>
+        total + (bill.total || 0),
+      0
+    );
+  }
+
+  toggleProfile(): void {
+    this.showProfileMenu = !this.showProfileMenu;
+  }
+
+  changePassword(): void {
+
+    const currentPassword = prompt(
+      'Enter Current Password'
+    );
+
+    const savedPassword =
+      localStorage.getItem('adminPassword') || 'admin@16';
+
+    if (currentPassword !== savedPassword) {
+      alert('Current Password Incorrect');
+      return;
+    }
+
+    const newPassword = prompt(
+      'Enter New Password'
+    );
+
+    if (!newPassword) {
+      return;
+    }
+
+    localStorage.setItem(
+      'adminPassword',
+      newPassword
+    );
+
+    alert('Password Changed Successfully');
+  }
+
+  logout(): void {
+
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('userName');
+
+    this.router.navigate(['/']);
+  }
+
+  logoutFromLogo(): void {
+
+    if (confirm('Logout from Salon CRM?')) {
 
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('userName');
 
       this.router.navigate(['/']);
     }
-
-    logoutFromLogo() {
-
-      if (confirm('Logout from Salon CRM?')) {
-
-        localStorage.removeItem('loggedIn');
-        localStorage.removeItem('userName');
-
-        this.router.navigate(['/']);
-      }
-    }
   }
+}
